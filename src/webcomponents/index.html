@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+       
+    </head>
+    <body>
+        <style>
+            div{
+              color:blue
+            }
+            :root{
+              --divcolor:yellow        
+            }
+          </style>
+          <template id="calendar">
+            <style>
+              div{
+                color:var(--divcolor,red)
+              }
+            </style>
+            <div>Hello World</div>
+            <slot></slot>
+          </template>
+        <script type="module" src="Calendar.js"></script>
+        <script>
+            function supportsDeclarativeShadowDOM(){
+                return HTMLTemplateElement.prototype.hasOwnProperty('shadowRootMode')
+            }
+            if(!supportsDeclarativeShadowDOM()){
+                //pq funcioni també amb firefox cal fer això
+                //http://developer.chrome.com/articles/declarative-shadow-dom
+                // copiar aquí root.querySelectorAll...
+                root.quertSelectorAll("template[shadowrootmode]").forEach(template => {
+                    const mode=template.getAttribute("shadowrootmode");
+                    const shadowRoot=template.parentNode.attachShadow({mode});
+                    shadowRoot.appendChild(template.content);
+                    template.remove();
+                    attachShadowRoots(shadowRoot);
+                });
+            }
+        </script>
+        <cxb-calendar><div>child</div></cxb-calendar>
+    </body>
+
+</html>

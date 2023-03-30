@@ -1,0 +1,5 @@
+.layout{
+    display: flex;
+    grid-template-columns: reapeat(25%,1fr);
+    gap: 1rem;
+}
